@@ -49,6 +49,7 @@ for file in excel_files:
 merged_df = pd.concat(df_list, ignore_index=True)
 ```
 
+
 - clean data
 - ลบคอลัมน์ที่มี NaN มากกว่า 50%
 
@@ -81,6 +82,7 @@ columns_to_handle_zeros = ['humidity', 'pm_2_5', 'temperature']
 ```sh
 new_data = data.drop(index=range(2000, len(data)))
 ```
+
 
 - train pm 2.5
 
