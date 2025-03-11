@@ -34,14 +34,53 @@ pip install pycaret pandas numpy matplotlib os
 
 - pm data
 - อ่านและรวบรวมข้อมูลจากไฟล์ Excel
+
+```sh
+df_list = []
+for file in excel_files:
+    file_path = os.path.join(folder_path, file)
+    df = pd.read_excel(file_path)  
+    df_list.append(df)
+```
+
 - รวมข้อมูลทั้งหมด
+
+```sh
+merged_df = pd.concat(df_list, ignore_index=True)
+```
 
 - clean data
 - ลบคอลัมน์ที่มี NaN มากกว่า 50%
+
+```sh
+data.dropna(axis=1, thresh=1, inplace=True)
+```
+
 - แทนที่ค่า NaN ด้วยค่าเฉลี่ย
+
+```sh
+data['temperature'].fillna(data['temperature'].mean(), inplace=True)
+data['pm_2_5'].fillna(data['pm_2_5'].mean(), inplace=True)
+```
+
 - ลบคอลัมน์ที่ไม่จำเป็น
+
+```sh
+columns_to_drop = ["timezone", "pm_10", "pm_2_5_sp"]
+data.drop(columns=columns_to_drop, inplace=True, errors="ignore")
+```
+
 - แทนที่ค่า 0 ด้วยค่าเฉลี่ย
+
+```sh
+columns_to_handle_zeros = ['humidity', 'pm_2_5', 'temperature']
+```
+
 - ลบแถวที่ไม่ต้องการ
+
+```sh
+new_data = data.drop(index=range(2000, len(data)))
+```
 
 - train pm 2.5
 
