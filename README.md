@@ -33,22 +33,17 @@ pip install pycaret pandas numpy matplotlib os
 # Usage
 
 - pm data
-  - อ่านและรวบรวมข้อมูลจากไฟล์ Excel
-  
-  ```sh
-  df_list = []
-  for file in excel_files:
-      file_path = os.path.join(folder_path, file)
-      df = pd.read_excel(file_path)  
-      df_list.append(df)
-  ```
+- อ่านและรวบรวมข้อมูลจากไฟล์ Excel
+- รวมข้อมูลทั้งหมด
 
 - clean data
-  - ลบคอลัมน์ที่มี NaN มากกว่า 50%
+- ลบคอลัมน์ที่มี NaN มากกว่า 50%
+- แทนที่ค่า NaN ด้วยค่าเฉลี่ย
+- ลบคอลัมน์ที่ไม่จำเป็น
+- แทนที่ค่า 0 ด้วยค่าเฉลี่ย
+- ลบแถวที่ไม่ต้องการ
 
-  ```sh
-  data.dropna(axis=1, thresh=1, inplace=True)
-  ```
+- train pm 2.5
 
 # Getting Started
 # License
