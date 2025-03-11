@@ -21,4 +21,4 @@ merged_df = pd.concat(df_list, ignore_index=True)
 # บันทึกเป็นไฟล์ CSV
 merged_df.to_csv(output_file, index=False, encoding="utf-8-sig")
 
-print(f"รวมไฟล์เสร็จสิ้น! ไฟล์ถูกบันทึกที่: {output_file}")
+print(f"รวมไฟล์เสร็จสิ้น ไฟล์ถูกบันทึกที่: {output_file}")

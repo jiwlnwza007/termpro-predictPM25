@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the CSV file into a pandas DataFrame
-file_path = 'D:\\7\\66-psu\\year2\\semester2\\ba ai\\termpro-predictPM25\\data\\pm-data.csv'
+file_path = 'D:\\7\\66-psu\\year2\\semester2\\ba ai\\termpro-predictPM25\\clean_data\\pm-data.csv'
 data = pd.read_csv(file_path)
 
 
@@ -20,5 +20,5 @@ columns_to_handle_zeros = ['humidity', 'pm_2_5', 'temperature']
 
 
 new_data = data.drop(index=range(2000, len(data)))
-cleaned_file_path = 'D:\\7\\66-psu\\year2\\semester2\\ba ai\\termpro-predictPM25\\data\\cleaned_data.csv'
+cleaned_file_path = 'D:\\7\\66-psu\\year2\\semester2\\ba ai\\termpro-predictPM25\\clean_data\\cleaned_data.csv'
 new_data.to_csv(cleaned_file_path, index=False)
