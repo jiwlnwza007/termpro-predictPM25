@@ -13,15 +13,16 @@
 ```sh
 /termpro-predictPM25
 │
-├── /clean_data
-│   ├── cleandata.py
-│   ├── cleaned_data.csv
-│   ├── data.py
-│   └── pm-data.csv          
-├── /pm-data
-├── train_pm25.ipynb                               
-├── /README.md                  
-└── /LICENSE.md                  
+├── /clean_data                     
+│   ├── cleandata.py            # การทำความสะอาดข้อมูล
+│   ├── cleaned_data.csv        # ข้อมูลที่ผ่านการทำความสะอาด
+│   ├── data.py                 # จัดการข้อมูล
+│   └── pm-data.csv             # ข้อมูลก่อนการทำความสะอาด
+├── /pm-data                    # ข้อมูล PM25 ที่ใช้ในการฝึก
+├── train_pm25.ipynb            # ฝึกโมเดล PM25
+│                          
+├── /README.md                  # คำอธิบายโปรเจกต์                
+└── /LICENSE.md                 # ระบุลิขสิทธิ์ของโปรเจกต์ 
 ```
 
 # Setup
