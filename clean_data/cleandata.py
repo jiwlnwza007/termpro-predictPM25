@@ -19,6 +19,6 @@ data.drop(columns=columns_to_drop, inplace=True, errors="ignore")
 columns_to_handle_zeros = ['humidity', 'pm_2_5', 'temperature']
 
 
-new_data = data.drop(index=range(2000, len(data)))
+new_data = data.tail(2000)
 cleaned_file_path = 'D:\\7\\66-psu\\year2\\semester2\\ba ai\\termpro-predictPM25\\clean_data\\cleaned_data.csv'
 new_data.to_csv(cleaned_file_path, index=False)
