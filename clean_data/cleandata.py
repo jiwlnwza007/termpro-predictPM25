@@ -12,7 +12,7 @@ data['temperature'].fillna(data['temperature'].mean(), inplace=True)
 data['pm_2_5'].fillna(data['pm_2_5'].mean(), inplace=True)
 
 # Drop specific columns
-columns_to_drop = ["timezone", "pm_10", "pm_2_5_sp"]
+columns_to_drop = ["timezone", "pm_10", "pm_2_5_sp", "Unnamed: 0"]
 data.drop(columns=columns_to_drop, inplace=True, errors="ignore")
 
 # Handle zeros separately
