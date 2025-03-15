@@ -1,28 +1,62 @@
+#Prediction PM2.5
 # Progamming Language
-- Python
-- JavaScript (HTML)
+- Python พัฒนาโมเดลและจัดการข้อมูล
+- JavaScript (HTML) สร้าง UI สำหรับการแสดงผลข้อมูล (Dashboard)
 # Libraries
-- pycaret
-- padas
-- numpy
-- matplotlib
-- os
+- pycaret พัฒนา เปรียบเทียบ ทดสอบโมเดล และเลือกโมเดลที่ดีที่สุด 
+- padas จัดการและวิเคราะห์ข้อมูลในรูปแบบ DataFrame
+- numpy คำนวณทางคณิตศาสตร์และจัดการอาเรย์
+- matplotlib สร้างกราฟและภาพข้อมูล
+- os อ่านและเขียนไฟล์ จัดการโฟลเดอร์ 
 # Features
+1.หน้าเว็บ
+- แสดงลิงค์ไปยังหน้าอื่นๆ
+- แสดงภาพและข้อความต้อนรับ
+
+2.กราฟพยากรณ์ค่าความเข้มของฝุ่นละอองขนาดเล็ก (PM2.5) สำหรับ 7 วันข้างหน้า
+- โหลดโมเดลที่ฝึกแล้วและแสดงผลลัพธ์การพยากรณ์ในรูปแบบ กราฟเส้น ด้วย Plotly
+
+3.กราฟพยากรณ์ค่าความชื้น สำหรับ 7 วันข้างหน้า
+- โหลดโมเดลที่ฝึกแล้วและแสดงผลลัพธ์การพยากรณ์ในรูปแบบ กราฟเส้น ด้วย Plotly
+
+4.ข้อมูลรวม
+- แสดงข้อมูลจากไฟล์ CSV ที่ได้รับการทำความสะอาดแล้วในรูปแบบตาราง โดยใช้ Dash DataTable
+
+5.กราฟค่าความเข้มของฝุ่นละอองขนาดเล็ก (PM2.5) และความชื้นตามช่วงเวลา
+- ใช้ DatePickerRange ในการเลือกช่วงเวลาและแสดงกราฟ PM2.5 หรือความชื้นในช่วงเวลานั้นๆ
+
+6.การเชื่อมโยงหน้า
+- สามารถเลือกดูข้อมูลต่างๆ ผ่านลิงค์ที่แสดงในหน้าแรก โดยใช้ dcc.Location และ dcc.Link เพื่อการนำทางระหว่างหน้า
+
+7.การใช้งานโมเดลที่ฝึกแล้ว
+- โมเดลที่ฝึกแล้วจะถูกบันทึกด้วย pickle และโหลดมาพยากรณ์ค่า PM2.5 และความชื้น
+
+8.สไตล์และการออกแบบ
+- ปรับแต่งรูปแบบการแสดงผล เช่น สี, ขนาด และรูปแบบของตารางหรือกราฟ โดยการใช้ CSS
+
 # Directory Structure
 
 ```sh
 /termpro-predictPM25
+│
+├── /assets
+│   ├── carmeme.jpg             # รูปภาพที่ใช้ในหน้าแรกของแดชบอร์ด
 │
 ├── /clean_data                     
 │   ├── cleandata.py            # การทำความสะอาดข้อมูล
 │   ├── cleaned_data.csv        # ข้อมูลที่ผ่านการทำความสะอาด
 │   ├── data.py                 # จัดการข้อมูล
 │   └── pm-data.csv             # ข้อมูลก่อนการทำความสะอาด
+│
 ├── /pm-data                    # ข้อมูล PM25 ที่ใช้ในการฝึก
-├── train_pm25.ipynb            # ฝึกโมเดล PM25
+│
+├── app.py                      # แอป Dash
+├── styles.css                  # ตกแต่งแดชบอร์ด
+├── train_humidity.ipynb        # ฝึกโมเดลความชื้น
+├── train_pm25.ipynb            # ฝึกโมเดล PM2.5
 │                          
-├── /README.md                  # คำอธิบายโปรเจกต์                
-└── /LICENSE.md                 # ระบุลิขสิทธิ์ของโปรเจกต์ 
+├── README.md                  # คำอธิบายโปรเจกต์                
+└── LICENSE.md                 # ระบุลิขสิทธิ์ของโปรเจกต์ 
 ```
 
 # Setup
@@ -33,25 +67,7 @@ pip install pycaret pandas numpy matplotlib os
 ```
 # Usage
 
-- pm data
-- อ่านและรวบรวมข้อมูลจากไฟล์ Excel
-
-```sh
-df_list = []
-for file in excel_files:
-    file_path = os.path.join(folder_path, file)
-    df = pd.read_excel(file_path)  
-    df_list.append(df)
-```
-
-- รวมข้อมูลทั้งหมด
-
-```sh
-merged_df = pd.concat(df_list, ignore_index=True)
-```
-
-
-- clean data
+1.การจัดการข้อมูล (Data Handling)
 - ลบคอลัมน์ที่มี NaN มากกว่า 50%
 
 ```sh
@@ -83,10 +99,57 @@ columns_to_handle_zeros = ['humidity', 'pm_2_5', 'temperature']
 ```sh
 new_data = data.drop(index=range(2000, len(data)))
 ```
+2.การฝึกฝนโมเดล (Model Training)
+- เตรียมข้อมูล
+
+```sh
+pm_data = pd.read_csv("clean_data\\cleaned_data.csv")
+pm_data["timestamp"] = pd.to_datetime(pm_data["timestamp"])
+print(pm_data)
+```
+
+- เปรียบเทียบโมเดล
+
+```sh
+best = compare_models()
+
+```
+
+- เลือกโมเดลที่ดีที่สุด
+
+```sh
+ensem_best_model = ensemble_model(best_model_tune, n_estimators = 50)
+```
+
+- ทดสอบโมเดล
 
 
-- train pm 2.5
+```sh
+predict = predict_model(ensem_best_model, data=next_data)
+data_plot = pd.DataFrame(predict, columns=['timestamp', 'prediction_label'])
+data_plot["prediction_label"] = data_plot["prediction_label"].round(2)
+data_plot
+```
 
-# Getting Started
+3.สร้างกราฟและแสดงผล (Visualization)
+
+```sh
+plt.plot(next_week, predict['prediction_label'])
+plt.xlabel('Date')
+plt.ylabel('PM2.5')
+plt.title('PM2.5 IN NEXT 7 DAYS')
+plt.grid(True)
+plt.show()
+```
+
+```sh
+plt.plot(next_week, predict['prediction_label'])
+plt.xlabel('Date')
+plt.ylabel('Humidity')
+plt.title('Humidity IN NEXT 7 DAYS')
+plt.grid(True)
+plt.show()
+```
+
 # License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
