@@ -137,6 +137,7 @@ data_plot
 
 3.สร้างกราฟและแสดงผล (Visualization)
 
+- PM2.5
 ```sh
 plt.plot(next_week, predict['prediction_label'])
 plt.xlabel('Date')
@@ -145,6 +146,8 @@ plt.title('PM2.5 IN NEXT 7 DAYS')
 plt.grid(True)
 plt.show()
 ```
+
+- Humidity
 
 ```sh
 plt.plot(next_week, predict['prediction_label'])
